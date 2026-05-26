@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KiinBird — Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #1B3A6B;
+      --green: #1A5C38;
+      --gold: #C9A84C;
+      --white: #FFFFFF;
+      --cream: #F8F6F1;
+      --navy-light: rgba(27, 58, 107, 0.08);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 90%, rgba(26,92,56,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 10%, rgba(27,58,107,0.10) 0%, transparent 55%),
+        var(--cream);
+    }
+
+    /* Subtle dot grid */
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(27,58,107,0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      gap: 0;
+    }
+
+    /* ── LOGO ── */
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0px;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeUp 0.8s ease forwards 0.1s;
+    }
+
+    /* Real logo image */
+    .logo-img {
+      width: clamp(280px, 50vw, 480px);
+      height: auto;
+      display: block;
+    }
+
+    /* ── TAGLINE ── */
+    .tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(14px, 2.2vw, 18px);
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.3s;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.45s;
+    }
+
+    .divider-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--navy));
+    }
+
+    .divider-line.right {
+      background: linear-gradient(90deg, var(--navy), transparent);
+    }
+
+    .divider-icon {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    /* ── HEADLINE ── */
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.15;
+      color: var(--navy);
+      max-width: 700px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.5s;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    /* ── SUBTEXT ── */
+    .subtext {
+      font-size: clamp(15px, 2vw, 17px);
+      font-weight: 300;
+      text-align: center;
+      color: rgba(27,58,107,0.65);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.65s;
+    }
+
+    /* ── EMAIL FORM ── */
+    .form-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+      max-width: 460px;
+      background: var(--white);
+      border-radius: 100px;
+      border: 1.5px solid rgba(27,58,107,0.18);
+      box-shadow: 0 4px 32px rgba(27,58,107,0.08);
+      padding: 6px 6px 6px 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-wrap:focus-within {
+      border-color: var(--green);
+      box-shadow: 0 4px 32px rgba(26,92,56,0.15);
+    }
+
+    .form-wrap input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--navy);
+      min-width: 0;
+    }
+
+    .form-wrap input::placeholder {
+      color: rgba(27,58,107,0.35);
+    }
+
+    .form-wrap button {
+      flex-shrink: 0;
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 14px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+
+    .form-wrap button:hover {
+      background: #145030;
+      transform: scale(1.02);
+    }
+
+    .form-wrap button:active {
+      transform: scale(0.98);
+    }
+
+    /* ── SUCCESS STATE ── */
+    .success-msg {
+      display: none;
+      font-size: 14px;
+      color: var(--green);
+      font-weight: 500;
+      margin-top: 14px;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    /* ── FEATURES PILLS ── */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 48px;
+      max-width: 560px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1s;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--white);
+      border: 1px solid rgba(27,58,107,0.12);
+      border-radius: 100px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(27,58,107,0.7);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .pill:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      position: fixed;
+      bottom: 24px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(27,58,107,0.35);
+      letter-spacing: 0.06em;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.2s;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .form-wrap {
+        flex-direction: column;
+        border-radius: 16px;
+        padding: 16px;
+        gap: 12px;
+      }
+      .form-wrap input { width: 100%; text-align: center; }
+      .form-wrap button { width: 100%; padding: 14px; }
+      .features { gap: 8px; }
+      .hummingbird { width: 44px; height: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<main class="page">
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <img class="logo-img" src="horizontal_logo_v1.jpg" alt="KiinBird" />
+
+  <!-- TAGLINE -->
+  <p class="tagline">Less planning. More birdies.</p>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon"></div>
+    <div class="divider-line right"></div>
+  </div>
+
+  <!-- HEADLINE -->
+  <h1 class="headline">The <em>ultimate</em> golf trip<br/>is almost here.</h1>
+
+  <!-- SUBTEXT -->
+  <p class="subtext">
+    KiinBird is the all-in-one platform for planning your group golf trip — tee times, expenses, lodging, transport, and your own private tournament. One app. Zero chaos.
+  </p>
+
+  <!-- EMAIL CAPTURE -->
+  <div class="form-wrap" id="formWrap">
+    <input type="email" id="emailInput" placeholder="Enter your email for early access" />
+    <button onclick="handleSubmit()">Notify Me</button>
+  </div>
+  <p class="success-msg" id="successMsg">🐦 You're on the list! We'll be in touch soon.</p>
+
+  <!-- FEATURE PILLS -->
+  <div class="features">
+    <div class="pill"><div class="pill-dot"></div>Tee Time Manager</div>
+    <div class="pill"><div class="pill-dot"></div>Expense Splitting</div>
+    <div class="pill"><div class="pill-dot"></div>Group Lodging</div>
+    <div class="pill"><div class="pill-dot"></div>Transportation</div>
+    <div class="pill"><div class="pill-dot"></div>Tournament Leaderboard</div>
+  </div>
+
+</main>
+
+<footer class="footer">© 2026 KiinBird. All rights reserved.</footer>
+
+<script>
+  function handleSubmit() {
+    const input = document.getElementById('emailInput');
+    const form = document.getElementById('formWrap');
+    const success = document.getElementById('successMsg');
+    const email = input.value.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!valid) {
+      form.style.borderColor = '#c0392b';
+      form.style.boxShadow = '0 4px 32px rgba(192,57,43,0.15)';
+      input.placeholder = 'Please enter a valid email';
+      setTimeout(() => {
+        form.style.borderColor = '';
+        form.style.boxShadow = '';
+        input.placeholder = 'Enter your email for early access';
+      }, 2000);
+      return;
+    }
+
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }
+
+  // Allow Enter key
+  document.getElementById('emailInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleSubmit();
+  });
+</script>
+
+</body>
+</html>
